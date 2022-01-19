@@ -7,10 +7,7 @@ class Edge:
         self.child = child
 
     def print_edge(self):
-        if (self.parent is not None) & (self.child is not None):
-            return self.label, self.parent.label, self.child.label
-        else:
-            return self.label
+        return self.label, self.parent.label, self.child.label
 
 
 

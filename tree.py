@@ -1,5 +1,6 @@
 from graphviz import Digraph
 from node import Node
+import data
 
 
 class Tree:
@@ -15,18 +16,20 @@ class Tree:
     def set_root_node(self, node):
         self.root_node = node
 
-    def build_node(self, data, data_dict, subset):
-        node = Node(data_dict['key'], data_dict['entropy'], data_dict['split_value'], data_dict['samples'],
-                    data_dict['value'], data_dict['class_var'])
-        data = data.get_all_subsets_by_avg_weight_1(subset, data_dict['key'], data_dict['split_value'])
-        node.add_edges(data)
+    def build_node(self, data_dict, subset):
+        node = Node(data_dict['key'], data_dict['entropy'],
+                    data_dict['split_value'], data_dict['samples'],
+                    data_dict['value'], data_dict['class_var']
+                    )
+        d = data.subsets_by_avg_weight(subset, data_dict['key'], data_dict['split_value'])
+        node.add_edges(d)
         return node
 
-    def visualize(self):
+    def make_dot_files(self):
         self.dot_graph.attr('node', fontsize='10', shape='box', style='rounded, filled', fillcolor='lightblue')
         self.dot_graph.attr('edge', fontsize='10')
         self.build_dot_tree(self.root_node)
-        self.dot_graph.render('Decision_Tree.gv', view=True)
+        self.dot_graph.render('./data/Decision_Tree.gv', view=False)
 
     def build_dot_tree(self, node):
         for edge in node.edges:
@@ -39,5 +42,3 @@ class Tree:
             self.dot_graph.node(parent)
             self.dot_graph.node(child)
             self.build_dot_tree(edge.child)
-
-

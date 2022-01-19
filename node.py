@@ -16,7 +16,6 @@ class Node:
     def add_edges(self, subsets):
         self.edges.append(Edge('True', subsets[1], self))
         self.edges.append(Edge('False', subsets[0], self))
-        # self.edges = [Edge(subset, subsets[subset], self) for subset in subsets]
 
     def get_info(self):
         return "{label} ≤ {split}\nentropy = {entropy}\nsamples = {samples}\nvalue = {value}\nclass = {classV}".format(
