@@ -34,7 +34,7 @@ def accuracy_score(y_true, y_pred):
 def classification_report(matrix_dict):
     report_dict = {}
     for label, value in matrix_dict.items():
-        report_dict[label] = {'accuracy': '0.00', 'precision': '0.00', 'recall': '0.00', 'f1-score': '0.00'}.copy()
+        report_dict[label] = {'precision': 0.0, 'recall': 0.0, 'f1-score': 0.0}.copy()
         if (value['tp'] == 0) | (value['fp'] == 0) | (value['fn'] == 0):
             continue
         report_dict[label]['precision'] = round(value['tp'] / (value['tp'] + value['fp']), 2)
@@ -71,8 +71,8 @@ def multilabel_matrix(y_true, y_pred, matrix_dict):
                 matrix_dict[label]['fp'] += 1
             if (y_pred[idx] != label) & (y_true[idx] != label):
                 matrix_dict[label]['tn'] += 1
-        matrix[label] =[[matrix_dict[label]['tp'], matrix_dict[label]['fn']],
-                        [matrix_dict[label]['fp'], matrix_dict[label]['tn']]]
+        matrix[label] = [[matrix_dict[label]['tp'], matrix_dict[label]['fn']],
+                         [matrix_dict[label]['fp'], matrix_dict[label]['tn']]]
     return matrix_dict, matrix
 
 

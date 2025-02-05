@@ -1,4 +1,4 @@
-from edge import Edge
+from storage.tree.edge import Edge
 
 
 class Node:

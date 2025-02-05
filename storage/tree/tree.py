@@ -1,6 +1,8 @@
 from graphviz import Digraph
-from node import Node
-import data
+from storage.tree.node import Node
+from algo import data
+
+from config import RESULTS_FOLDER_PATH
 
 
 class Tree:
@@ -29,7 +31,7 @@ class Tree:
         self.dot_graph.attr('node', fontsize='10', shape='box', style='rounded, filled', fillcolor='lightblue')
         self.dot_graph.attr('edge', fontsize='10')
         self.build_dot_tree(self.root_node)
-        self.dot_graph.render('./data/Decision_Tree.gv', view=False)
+        self.dot_graph.render(f'./{RESULTS_FOLDER_PATH}/Decision_Tree', view=False)
 
     def build_dot_tree(self, node):
         for edge in node.edges:

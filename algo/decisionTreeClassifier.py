@@ -1,10 +1,10 @@
 from collections import deque
 
-import calculation
+from metrics import calculation
 import operator
-import data
+from . import data
 
-from tree import Tree
+from storage.tree.tree import Tree
 
 
 class DecisionTreeClassifier:
@@ -35,7 +35,7 @@ class DecisionTreeClassifier:
                 queue.append(n)
                 node.children.append(n)
             edge.child = n
-        self.build(queue, count + 1)
+        return self.build(queue, count + 1)
 
     def find_best_split_feature(self, table):
         class_data, subset_size = data.class_data(table)
@@ -48,8 +48,12 @@ class DecisionTreeClassifier:
 
         for column in table.columns[:-1]:
             subset, size = data.all_subsets(table, column)
+
             a_w_entropy = calculation.calc_information_gain(subset, size, entropy)
             values[column] = max(a_w_entropy.items(), key=operator.itemgetter(1))
+
+        if not values:
+            return
 
         tup = max(values.items(), key=lambda sub: sub[1][1])
         feature_data['key'] = tup[0]
