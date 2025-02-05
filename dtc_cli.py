@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 import category_encoders as ce
 import pandas as pd
 
-from config import DATASET_FOLDER_PATH
+from config import DATASET_FOLDER_PATH, TEST_SIZE, RANDOM_STATE, MAX_DEPTH
 from metrics import calculation
 from algo.decisionTreeClassifier import DecisionTreeClassifier
 from storage.metrics.metrics_saver import save_results, save_multilabel_matrix, save_matrix_to_csv
@@ -26,8 +26,8 @@ def main(dataset_filename):
     x = df.drop(['class'], axis=1)
     y = df['class']
 
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=42)
-    dtc = DecisionTreeClassifier(max_depth=4)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=TEST_SIZE, random_state=RANDOM_STATE)
+    dtc = DecisionTreeClassifier(max_depth=MAX_DEPTH)
     dtc.train(x_train, y_train)
     y_pred_train = dtc.predict(x_train)
     y_pred_test = dtc.predict(x_test)
